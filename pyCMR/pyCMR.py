@@ -90,6 +90,26 @@ class CMR(object):
         self._SEARCH_HEADER = {'Accept': self._CONTENT_TYPE}
         self._CMR_HOST = self.config.get("request", "cmr_host")
 
+    @staticmethod
+    def _parse_search_response(unparsed_page):
+        """
+        Parses a single page of search results.
+        :return: (
+            list of results from this page,
+            boolean flag true if page is empty
+        )
+        """
+        page = ET.XML(unparsed_page)
+        results = []
+        empty_page = True
+        for child in list(page):
+            if child.tag == 'result':
+                results.append(XmlDictConfig(child))
+                empty_page = False
+            elif child.tag == 'error':
+                raise ValueError('Bad search response: {}'.format(unparsed_page))
+        return results, empty_page
+
     def _get_search_results(self, url, limit, **kwargs):
         """
         Search the CMR granules
@@ -108,15 +128,9 @@ class CMR(object):
                     headers=self._SEARCH_HEADER
             )
             unparsed_page = response.content
-            page = ET.XML(unparsed_page)
 
-            empty_page = True
-            for child in list(page):
-                if child.tag == 'result':
-                    results.append(XmlDictConfig(child))
-                    empty_page = False
-                elif child.tag == 'error':
-                    raise ValueError('Bad search response: {}'.format(unparsed_page))
+            sub_results, empty_page = self._parse_search_response(unparsed_page)
+            results.extend(sub_results)
 
             if empty_page:
                 break
