@@ -10,24 +10,29 @@ import os
 import unittest
 import xml.etree.ElementTree as ET
 
-from ..pyCMR import CMR, Collection, Granule
+from ..pyCMR import CMR
+
+mock_response_file_2hit = "pyCMR/tests/mock_responses/granules_2-hits.xml"
 
 class TestCMRResult(unittest.TestCase):
+
+    def test_results_len_on_2hit_mock_response(self):
+        """
+        tests CMR._parse_search_response returns list of len 2 using a pregen
+        mock xml response with 2 hits.
+        """
+        with open(mock_response_file_2hit) as mock_response:
+            results, empty_page_flag = CMR._parse_search_response(mock_response.read())
+            print(results)
+            self.assertEqual(len(results), 2)
+
     def test_get_dl_url_is_not_none(self):
         """
         tests that cmr.searchGranule().getDownloadUrl() is not None
         https://github.com/nasa/pyCMR/issues/27
-
-        NOTE: this uses an actual call to the API; might be better to mock it
         """
-        cmr=CMR("cmr.cfg")
-        results = cmr.searchGranule(
-            limit=10,
-            short_name="MOD09CMG",
-            temporal="2010-02-01T10:00:00Z,2010-02-01T12:00:00Z"
-        )
+        with open(mock_response_file_2hit) as mock_response:
+            results, empty_page_flag = CMR._parse_search_response(mock_response.read())
 
-        self.assertEqual(2, len(results))
-
-        for res in results:
-            self.assertIsNotNone(res.getDownloadUrl())
+            for res in results:
+                self.assertIsNotNone(res.getDownloadUrl())
