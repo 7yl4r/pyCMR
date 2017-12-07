@@ -103,9 +103,10 @@ class CMR(object):
         results = []
         empty_page = True
         for child in list(page):
-            if child.tag == 'result':
-                results.append(XmlDictConfig(child))
-                empty_page = False
+            if child.tag == 'references':
+                for ref in list(child):
+                    results.append(XmlDictConfig(ref))
+                    empty_page = False
             elif child.tag == 'error':
                 raise ValueError('Bad search response: {}'.format(unparsed_page))
         return results, empty_page
