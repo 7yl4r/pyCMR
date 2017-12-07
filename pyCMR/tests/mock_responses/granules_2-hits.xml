@@ -1,2 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<results><hits>2</hits><took>84</took><references><reference><name>SC:MOD09CMG.005:2078000889</name><id>G192035913-LPDAAC_ECS</id><location>https://cmr.earthdata.nasa.gov:443/search/concepts/G192035913-LPDAAC_ECS/1</location><revision-id>1</revision-id></reference><reference><name>SC:MOD09CMG.006:2176934748</name><id>G1028225473-LPDAAC_ECS</id><location>https://cmr.earthdata.nasa.gov:443/search/concepts/G1028225473-LPDAAC_ECS/2</location><revision-id>2</revision-id></reference></references></results>
+<results>
+    <hits>
+        2
+    </hits>
+    <took>
+        84
+    </took>
+    <references>
+        <reference>
+            <name>
+                SC:MOD09CMG.005:2078000889
+            </name>
+            <id>
+                G192035913-LPDAAC_ECS
+            </id>
+            <location>
+                https://cmr.earthdata.nasa.gov:443/search/concepts/G192035913-LPDAAC_ECS/1
+            </location>
+            <revision-id>
+                1
+            </revision-id>
+        </reference>
+        <reference>
+            <name>
+                SC:MOD09CMG.006:2176934748
+            </name>
+            <id>
+                G1028225473-LPDAAC_ECS
+            </id>
+            <location>
+                https://cmr.earthdata.nasa.gov:443/search/concepts/G1028225473-LPDAAC_ECS/2
+            </location>
+            <revision-id>
+                2
+            </revision-id>
+        </reference>
+    </references>
+</results>
