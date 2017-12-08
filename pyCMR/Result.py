@@ -57,7 +57,7 @@ class Result(dict):
         url = self._location
         # Downloadable url does not exist
         if not url:
-            return None
+            raise ValueError("no download url found")
         # make dirs recursively on user destination path as on the remote side
         destpath = destpath + "/" + url[url.find('allData'):]
         mkdir_p(dirname(destpath))
