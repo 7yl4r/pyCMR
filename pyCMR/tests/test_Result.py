@@ -11,7 +11,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 from ..pyCMR import CMR
-from ..pyCMR import Granule
+from ..Result import Granule, Result
 
 mock_response_file_2hit = "pyCMR/tests/mock_responses/granules_2-hits.xml"
 
@@ -44,3 +44,11 @@ class TestCMRResult(unittest.TestCase):
                 # It looks to me like the API changed significantly since
                 # this was designed.
                 self.assertIsNotNone(res['location'])
+
+    def test_dl_bad_url_throws_error(self):
+        """
+        tests that a failed attempt to download throws error
+        and does not fail silently.
+        """
+        mock_result=Result(_location="https://not.a/real/url?so&we&expect&this_to.fail")
+        self.assertRaises(Exception, mock_result.download)
