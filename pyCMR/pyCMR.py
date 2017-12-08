@@ -103,7 +103,8 @@ class CMR(object):
         results = []
         empty_page = True
         for child in list(page):
-            if child.tag == 'references':
+            logging.debug('child:' + str(child))
+            if child.tag == 'result' or child.tag == 'references':
                 for ref in list(child):
                     results.append(XmlDictConfig(ref))
                     empty_page = False
@@ -128,12 +129,14 @@ class CMR(object):
                     params=dict(kwargs, page_num=page_num, page_size=self._PAGE_SIZE),
                     headers=self._SEARCH_HEADER
             )
+            logging.debug(response.request.url)
             unparsed_page = response.content
 
             sub_results, empty_page = self._parse_search_response(unparsed_page)
             results.extend(sub_results)
 
             if empty_page:
+                logging.debug('got empty page')
                 break
             else:
                 page_num += 1
