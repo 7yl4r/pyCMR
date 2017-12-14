@@ -16,6 +16,7 @@ import shutil
 import urllib
 from os import makedirs
 from os.path import dirname, exists, isdir
+import logging
 
 import requests
 
@@ -109,6 +110,8 @@ class Granule(Result):
             self._downloadname = self._location.split("/")[-1]
         except KeyError:
             self._location = None
+            logging.warn("no downloadable url detected in response:")
+            logging.debug(self)
 
         # Retrieve OPeNDAPUrl
         try:
@@ -116,6 +119,8 @@ class Granule(Result):
             self._OPeNDAPUrl = filter(lambda x: x["Type"] == "OPeNDAP", urls)[0]['URL']
         except:
             self._OPeNDAPUrl = None
+            logging.warn("no OPeNDAP url detected in response:")
+            logging.debug(self)
 
     def getOPeNDAPUrl(self):
         return self._OPeNDAPUrl
