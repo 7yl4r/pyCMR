@@ -27,7 +27,6 @@ class IntegrationTests(unittest.TestCase):
             limit=10,
             short_name="MYD01",  # [M]odis (Y)aqua (D) (0) level [1]
             # collection_data_type="NRT",  # this is not available for granules
-            provider="LANCEMODIS",  # lance modis is hopefullly only serving NRT
             temporal=time_range
         )
         print(results)
@@ -50,7 +49,6 @@ class IntegrationTests(unittest.TestCase):
             limit=10,
             short_name="MYD01",  # [M]odis (Y)aqua (D) (0) level [1]
             # collection_data_type="NRT",  # this is not available for granules
-            provider="LANCEMODIS",  # lance modis is hopefullly only serving NRT
             temporal=time_range
         )
         results[0].download('')
