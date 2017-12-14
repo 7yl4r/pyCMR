@@ -101,16 +101,14 @@ class CMR(object):
         """
         page = ET.XML(unparsed_page)
         results = []
-        empty_page = True
         for child in list(page):
             logging.debug('child:' + str(child))
             if child.tag == 'result' or child.tag == 'references':
                 for ref in list(child):
                     results.append(XmlDictConfig(ref))
-                    empty_page = False
             elif child.tag == 'error':
                 raise ValueError('Bad search response: {}'.format(unparsed_page))
-        return results, empty_page
+        return results
 
     def _get_search_results(self, url, limit, **kwargs):
         """
@@ -132,11 +130,11 @@ class CMR(object):
             logging.debug(response.request.url)
             unparsed_page = response.content
 
-            sub_results, empty_page = self._parse_search_response(unparsed_page)
+            sub_results = self._parse_search_response(unparsed_page)
             results.extend(sub_results)
 
-            if empty_page:
-                logging.debug('got empty page')
+            if len(sub_results) < self._PAGE_SIZE:  # stop if pg not full (bc this must be last page)
+                logging.debug('got non-full page')
                 break
             else:
                 page_num += 1

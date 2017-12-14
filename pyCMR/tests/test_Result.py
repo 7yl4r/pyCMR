@@ -25,7 +25,7 @@ class TestCMRResult(unittest.TestCase):
         with open(mock_response_file_2hit) as mock_response_file:
             mock_response = mock_response_file.read()
             # print(mock_response)
-            results, empty_page_flag = CMR._parse_search_response(mock_response)
+            results = CMR._parse_search_response(mock_response)
             # print(results)
             self.assertEqual(len(results), 2)
 
@@ -35,7 +35,7 @@ class TestCMRResult(unittest.TestCase):
         https://github.com/nasa/pyCMR/issues/27
         """
         with open(mock_response_file_2hit) as mock_response:
-            results, empty_page_flag = CMR._parse_search_response(mock_response.read())
+            results = CMR._parse_search_response(mock_response.read())
 
             for res in results:
                 # self.assertIsNotNone(Granule(res).getDownloadUrl())
