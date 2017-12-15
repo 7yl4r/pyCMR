@@ -32,10 +32,11 @@ class IntegrationTests(unittest.TestCase):
         print(results)
         self.assertTrue(len(results) > 0)
 
-    def test_download(self):
+    def test_attempt_uncredentialed_download(self):
         """
-        download one granule for MODIS Aqua granule from LANCE
-        this assumes that three-day-old data will be available
+        attempt to download one granule for MODIS Aqua granule from LANCE
+        this assumes that three-day-old data will be available.
+        Expects to hit `530 Login incorrect`.
         """
         exec_datetime = datetime.now() - timedelta(days=3)
         TIME_FMT = "%Y-%m-%dT%H:%M:%SZ"  # iso 8601
@@ -52,4 +53,11 @@ class IntegrationTests(unittest.TestCase):
             temporal=time_range,
             downloadable='true'
         )
-        results[0].download()
+        # NOTE: these credentials are not real so the download will fail with
+        #       `IOError: [Errno ftp error] 530 Login incorrect.`,
+        #       but maybe it is good to test that we got this far... else
+        #       these need to be replaced with real credentials.
+        self.assertRaises(
+            IOError,
+            lambda: results[0].download('fake_username', 'fake_password')
+        )

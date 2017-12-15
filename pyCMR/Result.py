@@ -51,7 +51,7 @@ class Result(dict):
         for k in metaResult:
             self[k] = metaResult[k]
 
-    def download(self, destpath=".", unm=None, pwd=None):
+    def download(self, unm, pwd, destpath="."):
         """
         Download the dataset into file system
         :param destpath: path for downloaded files. Use current directory by default.
