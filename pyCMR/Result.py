@@ -59,7 +59,7 @@ class Result(dict):
         :param pwd: password if needed for ftp download
         :return:
         """
-        url = self._location
+        url = self.getDownloadUrl()
         # Downloadable url does not exist
         if not url:
             raise ValueError("no download url found")
@@ -87,7 +87,10 @@ class Result(dict):
         """
         :return:
         """
-        return self._location
+        if self._location is not None:
+            return self._location
+        else:
+            # TODO: do json request & parse results
 
 
 class Collection(Result):
