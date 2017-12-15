@@ -102,26 +102,5 @@ class Granule(Result):
     def __init__(self, metaResult):
         super(Granule, self).__init__(metaResult)
 
-        # Retrieve downloadable url
-        try:
-            if isinstance(self['Granule']['OnlineAccessURLs']['OnlineAccessURL'], dict):
-                self._location = self['Granule']['OnlineAccessURLs']['OnlineAccessURL']['URL']
-            elif isinstance(self['Granule']['OnlineAccessURLs']['OnlineAccessURL'], list):
-                self._location = self['Granule']['OnlineAccessURLs']['OnlineAccessURL'][0]['URL']
-            self._downloadname = self._location.split("/")[-1]
-        except KeyError:
-            self._location = None
-            logging.warn("no downloadable url detected in response:")
-            logging.debug(self)
-
-        # Retrieve OPeNDAPUrl
-        try:
-            urls = self['Granule']['OnlineResources']['OnlineResource']
-            self._OPeNDAPUrl = filter(lambda x: x["Type"] == "OPeNDAP", urls)[0]['URL']
-        except:
-            self._OPeNDAPUrl = None
-            logging.warn("no OPeNDAP url detected in response:")
-            logging.debug(self)
-
     def getOPeNDAPUrl(self):
         return self._OPeNDAPUrl
