@@ -121,7 +121,7 @@ class Granule(Result):
         except:
             self._OPeNDAPUrl = None
             logging.warn("no OPeNDAP url detected in response:")
-            logging.debug(self)
+            # logging.debug(self)
 
     def getOPeNDAPUrl(self):
         return self._OPeNDAPUrl

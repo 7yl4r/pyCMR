@@ -38,12 +38,7 @@ class TestCMRResult(unittest.TestCase):
             results = CMR._parse_search_response(mock_response.read())
 
             for res in results:
-                # self.assertIsNotNone(Granule(res).getDownloadUrl())
-                # the above does not work b/c the url setter is looking for keys
-                # that are not there. Why not just do: res['location'] ?
-                # It looks to me like the API changed significantly since
-                # this was designed.
-                self.assertIsNotNone(res['location'])
+                self.assertIsNotNone(res['Granule']['OnlineAccessURLs']['OnlineAccessURL'])
 
     def test_dl_bad_url_throws_error(self):
         """

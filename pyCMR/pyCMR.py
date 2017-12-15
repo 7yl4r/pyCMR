@@ -103,9 +103,8 @@ class CMR(object):
         results = []
         for child in list(page):
             logging.debug('child:' + str(child))
-            if child.tag == 'result' or child.tag == 'references':
-                for ref in list(child):
-                    results.append(XmlDictConfig(ref))
+            if child.tag == 'result':
+                results.append(XmlDictConfig(child))
             elif child.tag == 'error':
                 raise ValueError('Bad search response: {}'.format(unparsed_page))
         return results
