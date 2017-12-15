@@ -50,5 +50,5 @@ class TestCMRResult(unittest.TestCase):
         tests that a failed attempt to download throws error
         and does not fail silently.
         """
-        mock_result=Result(_location="https://not.a/real/url?so&we&expect&this_to.fail")
+        mock_result=Result({"_location":"https://not.a/real/url?so&we&expect&this_to.fail"})
         self.assertRaises(Exception, mock_result.download)

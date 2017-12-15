@@ -47,6 +47,10 @@ class Result(dict):
     """
     _location = None
 
+    def __init__(self, metaResult):
+        for k in metaResult:
+            self[k] = metaResult[k]
+
     def download(self, destpath=".", unm=None, pwd=None):
         """
         Download the dataset into file system
@@ -88,8 +92,7 @@ class Result(dict):
 
 class Collection(Result):
     def __init__(self, metaResult, cmr_host):
-        for k in metaResult:
-            self[k] = metaResult[k]
+        super(Collection, self).__init__(metaResult)
 
         self._location = 'https://{}/search/concepts/{}.umm-json'.format(cmr_host, metaResult['concept-id'])
         self._downloadname = metaResult['Collection']['ShortName']
@@ -97,9 +100,7 @@ class Collection(Result):
 
 class Granule(Result):
     def __init__(self, metaResult):
-
-        for k in metaResult:
-            self[k] = metaResult[k]
+        super(Granule, self).__init__(metaResult)
 
         # Retrieve downloadable url
         try:
