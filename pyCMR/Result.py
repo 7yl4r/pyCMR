@@ -109,7 +109,7 @@ class Granule(Result):
             elif isinstance(self['Granule']['OnlineAccessURLs']['OnlineAccessURL'], list):
                 self._location = self['Granule']['OnlineAccessURLs']['OnlineAccessURL'][0]['URL']
             self._downloadname = self._location.split("/")[-1]
-        except KeyError:
+        except:  # KeyError, TypeError:
             self._location = None
             logging.warn("no downloadable url detected in response:")
             logging.debug(self)
