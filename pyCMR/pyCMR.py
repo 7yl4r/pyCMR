@@ -126,7 +126,7 @@ class CMR(object):
                     params=dict(kwargs, page_num=page_num, page_size=self._PAGE_SIZE),
                     headers=self._SEARCH_HEADER
             )
-            logging.debug(response.request.url)
+            logging.info(response.request.url)
             unparsed_page = response.content
 
             sub_results = self._parse_search_response(unparsed_page)
